@@ -1,0 +1,44 @@
+﻿SELECT number, cod, new, name, price, sides FROM book
+
+SELECT number, cod, new, name, price, producer, sides, form, datee, circulation, topic, category FROM book
+
+SELECT cod, name, new, sides, price, number FROM book
+
+SELECT * FROM `book` WHERE 0,9
+
+SELECT DISTINCT producer FROM book
+
+SELECT * FROM book
+	WHERE new = 1
+
+SELECT * FROM `book` WHERE price > 20 AND price < 30
+
+SELECT * FROM `book` WHERE price < 20 OR price > 30
+
+SELECT * FROM `book` 
+WHERE (sides > 300 AND sides < 400) And (price > 20 AND price < 30)
+
+SELECT * FROM `book` 
+WHERE datee >= '2000-01-01' AND datee < '2000-03-01'
+
+SELECT * FROM `book` 
+WHERE cod = 5110
+OR    cod = 5141
+OR    cod = 4985
+OR    cod = 4241
+
+SELECT * FROM `book` 
+WHERE YEAR(datee) = 1999
+OR    YEAR(datee) = 2001
+OR    YEAR(datee) = 2003
+OR    YEAR(datee) = 2005
+
+SELECT * FROM `book` WHERE name LIKE 'А%' OR name LIKE 'К%'
+
+SELECT * FROM `book` WHERE name LIKE 'Апп%' AND price < 20 AND datee >= '2000-01-01' AND datee <= '2000-12-31'
+
+SELECT * FROM `book` WHERE name LIKE 'Апп%е' AND datee >= '2000-01-01' AND datee <= '2000-6-30'
+
+SELECT * FROM `book` WHERE name LIKE '%Microsoft%' AND NOT name LIKE '%Windows%'
+
+SELECT * FROM `book` WHERE name LIKE '%0%' OR '%1%' OR '%2%' OR '%3%' OR '%4%' OR '%5%' OR '%6%' OR '%7%' OR '%8%' OR '%9%'

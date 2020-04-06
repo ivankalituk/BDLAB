@@ -1,0 +1,54 @@
+SELECT COUNT(*) AS COUNT_, SUM(price) AS SUM_, AVG(price) AS AVG_, MIN(price) AS MIN_, MAX(price) AS MAX_ FROM book
+
+SELECT COUNT(*) WHERE price is not NULL
+
+SELECT COUNT(*) AS COUNT_, SUM(price) AS SUM_, AVG(price) AS AVG_, MIN(price) AS MIN_, MAX(price),new AS isnew FROM book 
+
+SELECT COUNT(*) AS COUNT_, SUM(price) AS SUM_, AVG(price) AS AVG_, MIN(price) AS MIN_, MAX(price) AS MAX_, datee AS DATE_ FROM book GROUP BY year(datee)
+
+SELECT COUNT(*) AS COUNT_, SUM(price) AS SUM_, AVG(price) AS AVG_, MIN(price) AS MIN_, MAX(price) AS MAX_, datee AS DATE_ FROM book 
+WHERE (price>=10) and (price<=20)
+GROUP BY year(datee)
+
+SELECT COUNT(*) AS COUNT_, SUM(price) AS SUM_, AVG(price) AS AVG_, MIN(price) AS MIN_, MAX(price) AS MAX_, datee AS DATE_ FROM book 
+GROUP BY year(datee)
+ORDER BY COUNT_ DESC
+
+SELECT COUNT(*),COUNT(price), left(name,1) AS FIRSTLETTER FROM book 
+GROUP by FIRSTLETTER
+
+SELECT COUNT(*),COUNT(price), left(name,1) AS FIRSTLETTER FROM book WHERE year(datee) >= 2000
+GROUP by FIRSTLETTER
+
+SELECT COUNT(*),COUNT(price), left(name,1) AS FIRSTLETTER FROM book WHERE year(datee) >= 2000
+GROUP by FIRSTLETTER
+ORDER BY FIRSTLETTER DESC
+
+SELECT COUNT(*) AS COUNT_, SUM(price) AS SUM_, AVG(price) AS AVG_, MIN(price) AS MIN_, MAX(price) AS MAX_, MONTH(datee) AS MONTH_, YEAR(datee) AS YEAR_ FROM book
+GROUP BY MONTH_
+
+SELECT COUNT(*) AS COUNT_, SUM(price) AS SUM_, AVG(price) AS AVG_, MIN(price) AS MIN_, MAX(price) AS MAX_ FROM book
+GROUP BY MONTH(datee), YEAR(datee); 
+
+SELECT COUNT(*) AS COUNT_, SUM(price) AS SUM_, AVG(price) AS AVG_, MIN(price) AS MIN_, MAX(price) AS MAX_ FROM book WHERE datee is not NULL
+GROUP BY MONTH(datee), YEAR(datee); 
+
+SELECT COUNT(*) AS COUNT_, SUM(price) AS SUM_, AVG(price) AS AVG_, MIN(price) AS MIN_, MAX(price) AS MAX_ FROM book
+GROUP BY MONTH(datee), YEAR(datee)
+ORDER BY MONTH(datee) DESC,YEAR(datee) ASC
+
+SELECT cod, price,price*27.4 AS USD,price*1.08 AS EUR, price*76.4 as RUB,new AS NEW FROM book GROUP BY NEW
+
+SELECT cod, round(price),round(price*27.4) AS USD,round(price*1.08) AS EUR, round(price*76.4) as RUB,new AS NEW FROM book GROUP BY NEW
+
+SELECT COUNT(*) AS COUNT_, SUM(price) AS SUM_, AVG(price) AS AVG_, MIN(price) AS MIN_, MAX(price) AS MAX_, producer FROM book GROUP BY producer
+
+SELECT COUNT(*) AS COUNT_, SUM(price) AS SUM_, AVG(price) AS AVG_, MIN(price) AS MIN_, MAX(price) AS MAX_, producer FROM book 
+GROUP BY producer, topic
+ORDER BY producer
+
+SELECT COUNT(*) AS COUNT_, SUM(price) AS SUM_, AVG(price) AS AVG_, MIN(price) AS MIN_, MAX(price) AS MAX_, producer,topic,category FROM book 
+GROUP BY producer, topic
+ORDER BY producer,topic,category
+
+SELECT producer FROM book WHERE ROUND(price/sides)>0.10

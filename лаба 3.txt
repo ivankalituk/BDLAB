@@ -1,0 +1,45 @@
+SELECT * FROM `book` WHERE price is null
+
+SELECT * FROM `book` WHERE price is NOT NULL AND circulation is NULL
+
+SELECT * FROM `book` WHERE datee is NULL
+
+SELECT * FROM `book` WHERE (CURRENT_DATE -datee) < '1-1-1' 
+
+SELECT * FROM `book` ORDER BY price ASC
+
+SELECT * FROM `book` 
+WHERE (sides >=300) and (sides <=400)
+ORDER BY name DESC
+
+SELECT * FROM `book` 
+WHERE (price >= 20) and (price <=40)
+ORDER BY datee DESC
+
+SELECT * FROM `book` 
+WHERE price / sides  > 0.10
+
+SELECT LENGTH(book_name) AS number
+SELECT LEFT(name,20) AS FIRST_20 FROM book
+
+SELECT CONCAT(LEFT(name,10),'...',RIGHT(name,10)) FROM book
+
+SELECT name,datee,DAY(datee) AS daydate, MONTH(datee) AS monthdate, YEAR(datee) AS yeardate FROM book
+
+SELECT name,datee,CONCAT(DAY(datee),'/',MONTH(datee),'/',YEAR(datee)) AS DATE FROM book
+
+SELECT cod, price,price*27.4 AS USD,price*1.08 AS EUR, price*76.4 as RUB FROM book
+
+SELECT cod, price,price*27.4 AS USD, TRUNCATE(price*27.4,0) AS USD1, ROUND(price*27.4,0) AS USD2 FROM book
+
+INSERT INTO book(number,cod,new,name,price,producer,sides,form,datee,circulation,topic,category)
+VALUES(111,2222,1,'Дичь',3000,'Я',1,'?','2020-4-4',1,'докладно про дичь','дикая дичь');
+
+INSERT INTO book(number,cod,name,price,producer,sides,form,datee,circulation,topic,category)
+VALUES(112,2223,'Дичь 2',3000,'Я',1,'?','2020-4-4',1,'докладно про дичь том 2','дикая дичь 2');
+
+DELETE FROM book WHERE YEAR(datee) <= 1990
+
+UPDATE book SET datee = CURRENT_DATE WHERE datee is NULL 
+
+UPDATE book SET new = 1 WHERE YEAR(datee) >= 2005
