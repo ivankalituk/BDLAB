@@ -1,0 +1,91 @@
+SELECT bookname.name, bookmeta.price, bookmeta.publisher
+FROM bookmeta, bookname
+WHERE bookmeta.code = bookname.code
+
+SELECT bookname.name, bookscathegorised.cathegory
+FROM bookname INNER JOIN bookscathegorised
+WHERE bookname.code = bookscathegorised.code
+
+SELECT bookname.name, bookmeta.price, bookmeta.publisher, bookmeta.format
+FROM bookname,bookmeta
+WHERE bookmeta.code = bookname.code
+
+SELECT cathegories.topic, bookscathegorised.cathegory, bookname.name, bookmeta.publisher
+FROM cathegories, bookscathegorised,bookname,bookmeta
+WHERE bookname.code = bookmeta.code
+ORDER BY cathegories.topic ASC, bookscathegorised.cathegory ASC
+
+SELECT bookname.name
+FROM bookname, bookmeta
+WHERE bookmeta.publisher LIKE '%BHV%' AND YEAR(bookmeta.datee) > 2000
+
+SELECT cathegories.cathegory, SUM(bookmeta.sides) AS 'SUM'
+FROM  cathegories, bookmeta
+GROUP BY cathegories.cathegory
+ORDER BY SUM DESC
+
+SELECT AVG(bookmeta.price) AS 'AVR'
+FROM bookmeta, cathegories
+WHERE cathegories.topic = 'Використання ПК' OR cathegories.topic = 'Linux'
+
+
+//если я правильно понял понятие универсальное отношение
+SELECT *
+FROM bookmeta,bookname,bookscathegorised
+WHERE bookname.code = bookmeta.code
+
+SELECT *
+FROM 
+bookscathegorised INNER JOIN bookmeta INNER JOIN bookname
+
+--
+
+SELECT bookname.name
+FROM bookmeta m1, bookmeta m2, bookname
+WHERE m1.sides = m2.sides
+
+SELECT n1.name, n2.name, n3.name
+FROM bookname n1, bookmeta m1, bookname n2, bookmeta m2, bookname n3, bookmeta m3
+WHERE n1.code = m1.code
+      AND n2.code = m2.code
+      AND n3.code = m3.code
+      AND m1.price = m2.price and m1.price = m3.price
+      AND m1.code != m2.code AND m1.code != m3.code AND m2.code != m3.code
+
+SELECT *
+FROM bookname NATURAL JOIN bookmeta NATURAL JOIN bookscathegorised
+WHERE bookscathegorised.cathegory = 'C & C ++'
+
+SELECT *
+FROM bookname NATURAL JOIN bookmeta NATURAL JOIN bookscathegorised
+WHERE bookmeta.publisher LIKE '%BHV%' AND YEAR(bookmeta.datee) > 2000
+
+SELECT meta.publisher
+FROM bookmeta meta
+WHERE NOT EXISTS (SELECT * FROM bookmeta WHERE publisher = meta.publisher and sides < 400);
+
+SELECT cat.cathegory
+FROM bookscathegorised cat
+WHERE (SELECT COUNT(*) FROM bookscathegorised WHERE bookscathegorised.cathegory = cat.cathegory) > 3;
+
+select bookname.name a
+from v , bookname, cathegories
+union (select distinct cathegories.topic a from v)
+union (select distinct cathegories.cathegory a from v)
+order by a ASC
+
+select distinct left(bookname.name locate(' ', bookname.name)) a from v
+union (select distinct cathegories.cathegory a from v)
+order by a DESC;
+
+
+
+
+
+
+
+
+
+
+
+
