@@ -1,0 +1,58 @@
+CREATE PROCEDURE proc1()
+	SELECT name, price, producer, form
+   	From book
+CALL proc1()
+
+CREATE PROCEDURE proc3(IN pro VARCHAR(20), IN y int)
+	SELECT name
+ 	FROM book
+    	WHERE book.producer like pro AND YEAR(book.datee) > y
+CALL proc2()
+
+CREATE PROCEDURE proc3(IN a VARCHAR(20), IN b VARCHAR(20))
+	SELECT *
+  	FROM book
+    	WHERE book.producer Like a AND YEAR(book.datee) > b
+CALL proc3('%BHV%', 2000)
+
+CREATE PROCEDURE proc4()
+	SELECT book.category, SUM(book.sides) AS 'SUMPAGES'
+    	FROM book
+   	GROUP BY book.category
+   	ORDER BY SUMPAGES ASC
+CALL proc4()
+
+CREATE PROCEDURE proc5(IN t1 VARCHAR(20), IN t2 VARCHAR(20))
+	SELECT book.category, AVG(book.price) AS 'AVG'
+  	FROM book
+  	WHERE book.category = t1 OR book.category = t2
+   	GROUP BY book.category
+CAll proc5('Linux','Использование ПК')
+
+//работал с одной таблицой из 1 лаб
+CREATE PROCEDURE proc6()
+	SELECT *
+    	FROM book
+CALL proc6()
+
+CREATE PROCEDURE proc7()
+	SELECT b1.name,b2.name
+    	FROM book b1, book b2
+    	WHERE b1.cod != b2.cod AND b1.sides = b2.sides
+CALL proc7()
+
+---
+
+CREATE PROCEDURE proc9(IN categ varchar(20))
+	SELECT name
+    	FROM book
+    	WHERE book.category like categ
+CALL proc9('%C++%')
+
+CREATE PROCEDURE proc10(IN num int)
+	SELECT book.producer
+    	FROM book
+    	WHERE book.sides <= num
+CALL proc10(400)
+
+
