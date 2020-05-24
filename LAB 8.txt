@@ -1,0 +1,97 @@
+1-------------------------------------------
+
+CREATE TRIGGER trig1 BEFORE INSERT ON book
+FOR EACH ROW
+IF COUNT(book.category) < 5 AND COUNT(book.category) > 10
+THEN  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR';
+
+CREATE TRIGGER trig1 BEFORE DELETE ON book
+FOR EACH ROW
+IF COUNT(book.category) < 5 AND COUNT(book.category) > 10
+THEN  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR';
+
+CREATE TRIGGER trig1 BEFORE UPDATE ON book
+FOR EACH ROW
+IF COUNT(book.category) < 5 AND COUNT(book.category) > 10
+THEN  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR';
+
+2--------------------------------------------
+
+CREATE TRIGGER trig2 AFTER UPDATE ON book
+FOR EACH ROW 
+UPDATE book.new
+	SET book.new = 0
+    	WHERE YEAR(book.datee) != YEAR(CURRENT_DATE)
+
+3--------------------------------------------
+
+CREATE TRIGGER trig3 AFTER UPDATE on book
+FOR EACH ROW
+UPDATE book.price
+	SET book.price = 0
+   	WHERE book.sides / book.price >= 10
+
+4--------------------------------------------
+
+
+DELIMITER $$
+CREATE TRIGGER trig4 BEFORE UPDATE ON `book` 
+FOR EACH ROW 
+IF ((new.category = 'BHV') AND (new.circulation < 5000)) OR ((new.category = 'Diasoft') AND (new.circulation < 10000))
+THEN     SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Ê³ëüê³ñòü á³ëüøà 10'; 
+END IF; 
+$$ DELIMITER ;
+
+5------------------------------------------
+
+-
+
+6------------------------------------------
+
+-
+
+7------------------------------------------
+
+CREATE TRIGGER trig7 BEFORE UPDATE ON book
+FOR EACH ROW
+IF (new.price != old.price) AND (LEFT(user(), LOCATE('@', user)) = 'dbo')
+THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR';
+END IF;
+
+8------------------------------------------
+
+CREATE TRIGGER trig7 BEFORE UPDATE ON book
+FOR EACH ROW
+UPDATE book.circulation
+SET circulation = 0
+WHERE (book.producer = 'Ýêîì') OR (book.producer = 'ÄÌÊ')
+
+CREATE TRIGGER trig9 BEFORE UPDATE ON book
+FOR EACH ROW BEGIN
+    IF YEAR(new.datee) = YEAR(CURRENT_DATE)
+    THEN
+        IF (SELECT COUNT(*) FROM book WHERE (YEAR(datee) = YEAR(new.dater) AND MONTH(datee) = MONTH(new.datee))) >= 10 
+        	THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR';
+        END IF;
+    END IF;
+END;
+
+9-----------------------------------------
+
+CREATE TRIGGER trig9 BEFORE UPDATE ON book
+FOR EACH ROW BEGIN
+    IF YEAR(new.datee) = YEAR(CURRENT_DATE)
+    THEN
+        IF (SELECT COUNT(*) FROM book WHERE (YEAR(datee) = YEAR(new.dater) AND MONTH(datee) = MONTH(new.datee))) >= 10 
+        	THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR';
+        END IF;
+    END IF;
+END;
+
+10----------------------------------------
+
+CREATE TRIGGER tri10 BEFORE UPDATE ON book
+FOR EACH ROW BEGIN
+UPDATE book.circulation
+SET book.circulation = 0
+WHERE book.form = '60õ88/16' AND book.producer = 'BHV'
