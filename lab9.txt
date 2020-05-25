@@ -1,0 +1,51 @@
+1--------------------------------
+
+CREATE FUNCTION f1 (yeardate int)
+RETURNS INT
+RETURN
+(SELECT SUM(book.price) FROM book
+WHERE YEAR(book.datee) = yeardate);
+
+SELECT f1(2004);
+
+2--------------------------------
+
+Нельзя возвращать таблицу
+
+CREATE FUNCTION f2 (yeardate int)
+RETURNS TABLE(name varchar(20))
+RETURN
+(SELECT * FROM book
+WHERE YEAR(book.datee) = yeardate
+
+3--------------------------------
+
+CREATE PROCEDURE f3()
+BEGIN
+DECLARE pName VARCHAR(255);
+DECLARE done INT DEFAULT 0;
+DECLARE curs 
+CURSOR FOR SELECT `publisher`.`name` FROM `publisher`;
+DECLARE CONTINUE HANDLER FOR SQLSTATE '02000' SET done=1;
+OPEN curs;
+IF done = 0 THEN
+FETCH curs INTO pName;
+END IF;
+CLOSE curs;
+END
+
+4--------------------------------
+
+CREATE PROCEDURE f4(year int)
+BEGIN
+DECLARE newti VARCHAR(255);
+DECLARE done INT DEFAULT 0;
+DECLARE marker CURSOR FOR SELECT `book`.`title` FROM `book` WHERE year(`book`.`date`) = year;
+DECLARE CONTINUE HANDLER FOR SQLSTATE '02000' SET done=1;
+OPEN marker;
+WHILE done = 0 DO
+FETCH marker INTO newti;
+SELECT newti;
+END WHILE;
+CLOSE marker;
+END
